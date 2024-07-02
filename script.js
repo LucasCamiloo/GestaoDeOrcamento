@@ -1,6 +1,7 @@
 let receitas = [];
 let despesas = [];
 let budgetChart = null;
+let itemParaExcluir = null;
 
 function adicionarReceita() {
     const descricao = document.getElementById('receitaDescricao').value;
@@ -28,43 +29,84 @@ function adicionarDespesa() {
     }
 }
 
+function removerReceita(index) {
+    itemParaExcluir = { tipo: 'receita', index };
+    exibirModalConfirmacao();
+}
+
+function removerDespesa(index) {
+    itemParaExcluir = { tipo: 'despesa', index };
+    exibirModalConfirmacao();
+}
+
+function exibirModalConfirmacao() {
+    const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+    modal.show();
+}
+
+document.getElementById('btnConfirmExcluir').addEventListener('click', function() {
+    if (itemParaExcluir.tipo === 'receita') {
+        receitas.splice(itemParaExcluir.index, 1);
+        atualizarTabela('receitasTable', receitas);
+    } else if (itemParaExcluir.tipo === 'despesa') {
+        despesas.splice(itemParaExcluir.index, 1);
+        atualizarTabela('despesasTable', despesas);
+    }
+    atualizarResumo();
+    atualizarGrafico();
+    itemParaExcluir = null;
+    const modal = bootstrap.Modal.getInstance(document.getElementById('confirmModal'));
+    modal.hide();
+});
+
 function atualizarTabela(tabelaId, dados) {
     const tabela = document.getElementById(tabelaId);
     tabela.innerHTML = '';
-    dados.forEach(item => {
+    dados.forEach((item, index) => {
         const row = tabela.insertRow();
         row.insertCell(0).textContent = item.descricao;
         row.insertCell(1).textContent = `R$ ${item.valor.toFixed(2)}`;
+        const cellAcao = row.insertCell(2);
+        const btnRemover = document.createElement('button');
+        btnRemover.textContent = 'Remover';
+        btnRemover.classList.add('btn', 'btn-sm', 'btn-danger', 'mx-1');
+        btnRemover.onclick = () => {
+            if (tabelaId === 'receitasTable') {
+                removerReceita(index);
+            } else if (tabelaId === 'despesasTable') {
+                removerDespesa(index);
+            }
+        };
+        cellAcao.appendChild(btnRemover);
     });
 }
 
 function atualizarResumo() {
-    const totalReceitas = receitas.reduce((acc, receita) => acc + receita.valor, 0);
-    const totalDespesas = despesas.reduce((acc, despesa) => acc + despesa.valor, 0);
+    const totalReceitas = receitas.reduce((acc, curr) => acc + curr.valor, 0);
+    const totalDespesas = despesas.reduce((acc, curr) => acc + curr.valor, 0);
     const saldo = totalReceitas - totalDespesas;
-
     document.getElementById('totalReceitas').textContent = totalReceitas.toFixed(2);
     document.getElementById('totalDespesas').textContent = totalDespesas.toFixed(2);
     document.getElementById('saldo').textContent = saldo.toFixed(2);
 }
 
 function atualizarGrafico() {
-    const ctx = document.getElementById('budgetChart').getContext('2d');
-    const totalReceitas = receitas.reduce((acc, receita) => acc + receita.valor, 0);
-    const totalDespesas = despesas.reduce((acc, despesa) => acc + despesa.valor, 0);
-
     if (budgetChart) {
         budgetChart.destroy();
     }
 
+    const ctx = document.getElementById('budgetChart').getContext('2d');
     budgetChart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: ['Receitas', 'Despesas'],
             datasets: [{
-                data: [totalReceitas, totalDespesas],
-                backgroundColor: ['#28a745', '#dc3545'],
-                borderWidth: 1
+                label: 'Orçamento',
+                data: [
+                    receitas.reduce((acc, curr) => acc + curr.valor, 0),
+                    despesas.reduce((acc, curr) => acc + curr.valor, 0)
+                ],
+                backgroundColor: ['#28a745', '#dc3545']
             }]
         },
         options: {
@@ -72,6 +114,13 @@ function atualizarGrafico() {
             plugins: {
                 legend: {
                     position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return ' ' + context.label + ': R$ ' + context.raw.toFixed(2);
+                        }
+                    }
                 }
             }
         }
@@ -79,7 +128,6 @@ function atualizarGrafico() {
 }
 
 function toggleTheme() {
-    document.body.classList.toggle('dark');
-    const navbar = document.querySelector('.navbar');
-    navbar.classList.toggle('dark');
+    const body = document.body;
+    body.classList.toggle('dark-theme');
 }

@@ -9,98 +9,147 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#" style="padding-left: 10%;">SIMULADOR</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <div class="form-check form-switch text-end" style="padding-right: 10%;">
-            <input class="form-check-input" type="checkbox" id="themeSwitcher" onclick="toggleTheme()">
-            <label class="form-check-label" for="themeSwitcher">Modo Escuro</label>
-        </div>
-      </nav>
 
+    <nav class="navbar fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand text-center" href="#">Simulador de Orçamento</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+    
+                    <div class="form-check form-switch text-end" style="padding-right: 10%;">
+                        <input class="form-check-input" type="checkbox" id="themeSwitcher" onclick="toggleTheme()">
+                        <label class="form-check-label" for="themeSwitcher">Modo Escuro</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
     <div class="container mt-5">
-        <h1 class="text-center mb-5">Simulador de Orçamento Pessoal</h1>
-        
-
-        
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-4">
                     <h2>Receitas</h2>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="receitaDescricao" placeholder="Descrição">
-                        <input type="number" class="form-control" id="receitaValor" placeholder="Valor">
-                        <button class="btn btn-success" onclick="adicionarReceita()">Adicionar Receita</button>
+                    <button style="width: 100%;" class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#receitas" aria-expanded="false" aria-controls="collapseExample">
+                        Receitas: R$<span id="totalReceitas">0</span>
+                    </button>
+                    <div class="collapse" id="receitas">
+                        <div class="card card-body">
+                            <div class="mb-4">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="receitaDescricao" placeholder="Descrição">
+                                    <input type="number" class="form-control" id="receitaValor" placeholder="Valor">
+                                    <button class="btn btn-success" onclick="adicionarReceita()">Adicionar Receita</button>
+                                </div>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Descrição</th>
+                                            <th>Valor</th>
+                                            <th>Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="receitasTable">
+                                        <!-- Receitas serão adicionadas aqui -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Descrição</th>
-                                <th>Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody id="receitasTable">
-                            <!-- Receitas serão adicionadas aqui -->
-                        </tbody>
-                    </table>
                 </div>
-
+    
                 <div class="mb-4">
                     <h2>Despesas</h2>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="despesaDescricao" placeholder="Descrição">
-                        <input type="number" class="form-control" id="despesaValor" placeholder="Valor">
-                        <button class="btn btn-danger" onclick="adicionarDespesa()">Adicionar Despesa</button>
+                    <button style="width: 100%;" class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#despesas" aria-expanded="false" aria-controls="collapseExample">
+                        Despesas: R$<span id="totalDespesas">0</span>
+                    </button>
+                    <div class="collapse" id="despesas">
+                        <div class="card card-body">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="despesaDescricao" placeholder="Descrição">
+                                <input type="number" class="form-control" id="despesaValor" placeholder="Valor">
+                                <button class="btn btn-danger" onclick="adicionarDespesa()">Adicionar Despesa</button>
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Descrição</th>
+                                        <th>Valor</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="despesasTable">
+                                    <!-- Despesas serão adicionadas aqui -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Descrição</th>
-                                <th>Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody id="despesasTable">
-                            <!-- Despesas serão adicionadas aqui -->
-                        </tbody>
-                    </table>
                 </div>
-
+    
+              
+            </div>
+    
+            <div class="col-md-6 text-center">
+                <h2>Gastos</h2>
+                <p>Aqui se encontram todos os gastos que você teve no mês.</p>
+                <canvas id="budgetChart" class="text-center" style="display: block; margin: 0 auto;"></canvas>
                 <h2>Resumo</h2>
                 <div class="summary">
-                    <p>Total Receitas: R$ <span id="totalReceitas">0</span></p>
-                    <p>Total Despesas: R$ <span id="totalDespesas">0</span></p>
+                    <p>Total Receitas: R$ <span id="totalReceitasResumo">0</span></p>
+                    <p>Total Despesas: R$ <span id="totalDespesasResumo">0</span></p>
                     <p>Saldo: R$ <span id="saldo">0</span></p>
                 </div>
             </div>
-
-            <div class="col-md-6">
-                <h2>Gráfico</h2>
-                <canvas id="budgetChart"></canvas>
+        </div>
+    </div>
+    
+    <!-- Modal de Confirmação -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirmação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja excluir este item?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmExcluir">Excluir</button>
+                </div>
             </div>
         </div>
     </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>

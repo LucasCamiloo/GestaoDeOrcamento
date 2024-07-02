@@ -1,41 +1,98 @@
-body {
+/* Estilos para o modo claro */
+body.light-theme {
     background-color: #f4f4f9;
     color: #000;
 }
 
-body.dark {
-    background-color: #2c2c2c;
-    color: #f4f4f9;
-}
-
-.navbar.light {
+.navbar.light-theme {
     background-color: #f4f4f9;
     color: #000;
 }
 
-.navbar.dark {
-    background-color: #2c2c2c;
-    color: #f4f4f9;
-}
-
-.container {
+.container.light-theme {
     background: white;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    color: #000;
 }
-body.dark .container {
+
+.summary.light-theme {
+    color: #000;
+}
+
+.btn-light-theme {
+    color: #000;
+    background-color: #f4f4f9;
+    border-color: #f4f4f9;
+}
+
+/* Estilos para o modo escuro */
+body.dark-theme {
+    background-color: #2c2c2c;
+    color: #f4f4f9;
+}
+
+.navbar.dark-theme {
+    background-color: #2c2c2c;
+    color: #f4f4f9;
+}
+
+.container.dark-theme {
     background: #3c3c3c;
+    color: #f4f4f9;
 }
 
-.summary {
-    margin-top: 20px;
+.summary.dark-theme {
+    color: #f4f4f9;
 }
 
-.summary p {
-    font-size: 1.2em;
+.btn-dark-theme {
+    color: #f4f4f9;
+    background-color: #343a40;
+    border-color: #343a40;
 }
 
-.form-check-label {
-    color: inherit;
+/* Modal de Confirmação */
+.modal-content.dark-theme {
+    background-color: #343a40;
+    color: #f4f4f9;
+    border-color: #343a40;
+}
+
+/* Botões no modal */
+.btn-secondary.dark-theme {
+    color: #f4f4f9;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-danger.dark-theme {
+    color: #f4f4f9;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Toggle switch do modo escuro */
+.form-check-input.dark-theme {
+    background-color: #2c2c2c;
+    border-color: #2c2c2c;
+}
+
+.form-check-label.dark-theme {
+    color: #f4f4f9;
+}
+
+/* Tabelas */
+.table.dark-theme {
+    background-color: #343a40;
+    color: #f4f4f9;
+}
+
+.table-dark .table-dark {
+    background-color: #343a40;
+    color: #f4f4f9;
+}
+.col-md-6.dark-theme{
+    background-color: rgb(28, 28, 28); 
+    border-radius: 10%; 
+    padding: 10px;
+
 }
