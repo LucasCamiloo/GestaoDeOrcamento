@@ -1,11 +1,11 @@
-/* Estilos para o modo claro */
-body.light-theme {
+  /* Estilos para o modo claro */
+  body.light-theme {
     background-color: #f4f4f9;
     color: #000;
 }
 
 .navbar.light-theme {
-    background-color: #f4f4f9;
+    background-color: rgba(243, 243, 243, 0.587);
     color: #000;
 }
 
@@ -24,6 +24,44 @@ body.light-theme {
     border-color: #f4f4f9;
 }
 
+.modal-content.light-theme {
+    background-color: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+.btn-secondary.light-theme {
+    color: #000;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-danger.light-theme {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.form-check-input.light-theme {
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.form-check-label.light-theme {
+    color: #000;
+}
+
+.table.light-theme {
+    background-color: #fff;
+    color: #000;
+}
+
+.col-md-6.light-theme {
+    background-color: #fff;
+    border-radius: 10%;
+    padding: 10px;
+}
+
 /* Estilos para o modo escuro */
 body.dark-theme {
     background-color: #2c2c2c;
@@ -31,8 +69,8 @@ body.dark-theme {
 }
 
 .navbar.dark-theme {
-    background-color: #2c2c2c;
-    color: #f4f4f9;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #2c2c2c;
 }
 
 .container.dark-theme {
@@ -50,14 +88,12 @@ body.dark-theme {
     border-color: #343a40;
 }
 
-/* Modal de Confirmação */
 .modal-content.dark-theme {
     background-color: #343a40;
     color: #f4f4f9;
     border-color: #343a40;
 }
 
-/* Botões no modal */
 .btn-secondary.dark-theme {
     color: #f4f4f9;
     background-color: #6c757d;
@@ -70,7 +106,6 @@ body.dark-theme {
     border-color: #dc3545;
 }
 
-/* Toggle switch do modo escuro */
 .form-check-input.dark-theme {
     background-color: #2c2c2c;
     border-color: #2c2c2c;
@@ -80,19 +115,13 @@ body.dark-theme {
     color: #f4f4f9;
 }
 
-/* Tabelas */
 .table.dark-theme {
     background-color: #343a40;
     color: #f4f4f9;
 }
 
-.table-dark .table-dark {
-    background-color: #343a40;
-    color: #f4f4f9;
-}
-.col-md-6.dark-theme{
+.col-md-6.dark-theme {
     background-color: rgb(28, 28, 28); 
     border-radius: 10%; 
     padding: 10px;
-
 }

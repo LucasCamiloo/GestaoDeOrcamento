@@ -3,6 +3,14 @@ let despesas = [];
 let budgetChart = null;
 let itemParaExcluir = null;
 
+document.addEventListener('DOMContentLoaded', function() {
+    const selectElement = document.getElementById('ModoGrafico');
+    selectElement.addEventListener('change', MudancaGrafico);
+
+    // Chame MudancaGrafico na inicialização para definir o gráfico inicial
+    MudancaGrafico();
+});
+
 function adicionarReceita() {
     const descricao = document.getElementById('receitaDescricao').value;
     const valor = parseFloat(document.getElementById('receitaValor').value);
@@ -90,14 +98,17 @@ function atualizarResumo() {
     document.getElementById('saldo').textContent = saldo.toFixed(2);
 }
 
-function atualizarGrafico() {
+function MudancaGrafico() {
+    const selectElement = document.getElementById('ModoGrafico');
+    tipoGrafico = selectElement.value;
+
     if (budgetChart) {
         budgetChart.destroy();
     }
 
     const ctx = document.getElementById('budgetChart').getContext('2d');
     budgetChart = new Chart(ctx, {
-        type: 'pie',
+        type: tipoGrafico,
         data: {
             labels: ['Receitas', 'Despesas'],
             datasets: [{
@@ -127,7 +138,31 @@ function atualizarGrafico() {
     });
 }
 
+function atualizarGrafico() {
+    MudancaGrafico();
+}
+
 function toggleTheme() {
     const body = document.body;
+    const navbar = document.querySelector('.navbar');
+    const containers = document.querySelectorAll('.container');
+    const summaries = document.querySelectorAll('.summary');
+    const modals = document.querySelectorAll('.modal-content');
+    const tables = document.querySelectorAll('.table');
+    const colMd6 = document.querySelectorAll('.col-md-6');
+    const buttons = document.querySelectorAll('.btn');
+    const formCheckInputs = document.querySelectorAll('.form-check-input');
+    const formCheckLabels = document.querySelectorAll('.form-check-label');
+
     body.classList.toggle('dark-theme');
+    navbar.classList.toggle('dark-theme');
+
+    containers.forEach(container => container.classList.toggle('dark-theme'));
+    summaries.forEach(summary => summary.classList.toggle('dark-theme'));
+    modals.forEach(modal => modal.classList.toggle('dark-theme'));
+    tables.forEach(table => table.classList.toggle('dark-theme'));
+    colMd6.forEach(col => col.classList.toggle('dark-theme'));
+    buttons.forEach(button => button.classList.toggle('dark-theme'));
+    formCheckInputs.forEach(input => input.classList.toggle('dark-theme'));
+    formCheckLabels.forEach(label => label.classList.toggle('dark-theme'));
 }
